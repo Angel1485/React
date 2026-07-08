@@ -1,0 +1,161 @@
+/* --- Forzar limpieza de contenedores ocultos de React --- */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%; /* Obliga a que hereden todo el alto de la pantalla */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0f172a; /* Mismo fondo oscuro */
+}
+
+/* --- Tu tarjeta contenedora --- */
+.app-container {
+  width: 100%;
+  max-width: 500px;
+  background-color: #1e293b;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  padding: 32px;
+  box-sizing: border-box;
+  /* Eliminamos márgenes que puedan empujarlo */
+  margin: auto; 
+}
+
+
+/* --- Estilos Generales y Reset --- */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #0f172a; /* Fondo oscuro elegante */
+  color: #f8fafc;
+  
+  /* --- AQUÍ ESTÁ EL TRUCO PARA CENTRAR TODO --- */
+  display: flex;
+  justify-content: center; /* Centrado horizontal */
+  align-items: center;     /* Centrado vertical */
+  min-height: 100vh;       /* Toma el 100% de la altura de la pantalla */
+  
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* --- Contenedor Principal (Tarjeta App) --- */
+.app-container {
+  width: 100%;
+  max-width: 500px;
+  background-color: #1e293b; /* Fondo de la tarjeta (Slate 800) */
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+/* --- Título Principal --- */
+.app-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-top: 0;
+  margin-bottom: 24px;
+  text-align: center;
+  background: linear-gradient(to right, #38bdf8, #818cf8); /* Degradado moderno */
+  -webkit-text-fill-color: black;
+}
+
+/* --- Formulario de Entrada --- */
+.input-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.movie-input {
+  flex: 1;
+  background-color: #0f172a;
+  border: 2px solid #334155;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #f8fafc;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.movie-input:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+.movie-input::placeholder {
+  color: #64748b;
+}
+
+/* --- Botón Agregar --- */
+.btn-add {
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 0 20px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.btn-add:hover {
+  opacity: 0.95;
+}
+
+.btn-add:active {
+  transform: scale(0.97);
+}
+
+/* --- Lista de Películas (Tarjetas de Filas) --- */
+.movies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.movie-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #334155; /* Slate 700 */
+  border: 1px solid #475569;
+  border-radius: 10px;
+  padding: 14px 20px;
+  margin: 0; /* Resetea el margen nativo del <p> */
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none; /* Evita que se seleccione el texto al hacer doble clic */
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.movie-item:hover {
+  transform: translateX(4px);
+  background-color: #475569;
+  border-color: #64748b;
+}
+
+/* Estado Favorito Activo */
+.movie-item.is-favorite {
+  background-color: rgba(234, 179, 8, 0.1); /* Amarillo sutil transparente */
+  border-color: #eab308; /* Borde amarillo */
+  color: #fde047; /* Texto amarillo claro */
+}
+
+.star-icon {
+  font-size: 18px;
+  animation: pop 0.3s ease-out;
+}
+
+/* Animación sutil cuando aparece la estrella */
+@keyframes pop {
+  0% { transform: scale(0); }
+  70% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
