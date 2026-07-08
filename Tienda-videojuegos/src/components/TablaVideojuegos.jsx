@@ -1,0 +1,99 @@
+import React from 'react';
+import './TablaVideojuegos.css';
+
+function Videojuegos({ videojuegos, onEliminar, onEditar }) {
+  return (
+    <div className="pantalla-centrada">
+      <div className="panel-container">
+        
+        {/* Encabezado del panel */}
+        <div className="panel-header">
+          <div>
+            <h2 className="panel-title">Panel de Videojuegos</h2>
+            <p className="panel-subtitle">
+              Gestión y registro total de juegos activos en la plataforma.
+            </p>
+          </div>
+          <div className="panel-badge-total">
+            {videojuegos.length} Registros totales
+          </div>
+        </div>
+
+        {/* Contenedor Grid de Tarjetas */}
+        <div className="cards-grid">
+          {videojuegos.map((vj) => {
+            return (
+              <div key={vj.id} className="game-card">
+                
+                {/* Título y Estado */}
+                <div className="game-card-header">
+                  <h3 className="game-title">{vj.titulo}</h3>
+                  <span className={`status-badge ${vj.disponible ? 'active' : 'inactive'}`}>
+                    {vj.disponible ? "Disponible" : "No Disponible"}
+                  </span>
+                </div>
+
+                {/* Detalles del Juego */}
+                <div className="game-details">
+                  <div className="game-info-row">
+                    <span className="game-info-label">Género:</span>
+                    <span className="game-info-value">{vj.genero}</span>
+                  </div>
+                  
+                  <div className="game-info-row">
+                    <span className="game-info-label">Plataforma:</span>
+                    <span className="game-info-value">{vj.plataforma}</span>
+                  </div>
+
+                  <div className="game-info-row">
+                    <span className="game-info-label">Lanzamiento:</span>
+                    <span className="game-info-value">{vj.lanzamiento}</span>
+                  </div>
+
+                  <div className="game-info-row">
+                    <span className="game-info-label">Precio:</span>
+                    <span className="game-info-value">{vj.precio}</span>
+                  </div>
+                </div>
+
+                {/* Sección de progreso de juego */}
+                <div className="progress-container">
+                  <progress 
+                    value={vj.progreso} 
+                    max="1" 
+                    style={{ width: '100%', height: '8px', accentColor: '#1d4ed8' }}
+                  />
+                  <span style={{ fontSize: '12px', color: '#64748b', display: 'block', marginTop: '4px' }}>
+                    Progreso: {Math.round(vj.progreso * 100)}%
+                  </span>
+                </div>
+
+                {/* Botones de Acción */}
+                <div className="action-buttons">
+                  <button 
+                    onClick={() => onEditar(vj)}
+                    className="btn btn-edit"
+                    title="Editar juego"
+                  >
+                    Editar
+                  </button>
+                  <button 
+                    onClick={() => onEliminar(vj.id)}
+                    className="btn btn-delete"
+                    title="Eliminar juego"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+
+              </div>
+            );    
+          })}
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+export default Videojuegos;
