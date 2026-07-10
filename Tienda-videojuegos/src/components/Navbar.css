@@ -1,0 +1,50 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 16px 40px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 24px;
+}
+
+.navbar-logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e293b; /* Azul oscuro elegante */
+  letter-spacing: -0.5px;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #64748b; /* Gris azulado suave */
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.navbar-link:hover {
+  color: #3b82f6; /* Azul brillante al pasar el cursor */
+}
+
+/* Estilo especial para el botón "Nuevo Empleado" */
+.navbar-btn {
+  background-color: #eff6ff;
+  color: #2563eb;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.navbar-btn:hover {
+  background-color: #2563eb;
+  color: #ffffff;
+}

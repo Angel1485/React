@@ -1,0 +1,163 @@
+/* Contenedor tipo Tarjeta Moderna */
+.form-container {
+  max-width: 550px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 12px;
+}
+
+/* Grupos de Formulario */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* Inputs, Selects y Date-inputs unificados */
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group select {
+  padding: 10px 14px;
+  font-size: 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  color: #334155;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #3b82f6;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Radio Buttons Lineales */
+.radio-group {
+  display: flex;
+  gap: 20px;
+  padding: 6px 0;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  color: #334155 !important;
+  cursor: pointer;
+}
+
+.radio-label input[type="radio"] {
+  accent-color: #2563eb;
+  width: 16px;
+  height: 16px;
+}
+
+/* Checkbox de Estado */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px dashed #cbd5e1;
+}
+
+.checkbox-group input[type="checkbox"] {
+  accent-color: #2563eb;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Badges dinámicos que simulan la tabla */
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-badge.active {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.status-badge.inactive {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+/* Área de Botones */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 20px;
+}
+
+.form-actions button {
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-cancel {
+  background-color: #f1f5f9;
+  color: #64748b;
+}
+
+.btn-cancel:hover {
+  background-color: #e2e8f0;
+  color: #475569;
+}
+
+.btn-save {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.btn-save:hover {
+  background-color: #1d4ed8;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}

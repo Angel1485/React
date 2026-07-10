@@ -1,7 +1,15 @@
 import React from 'react';
 import './TablaVideojuegos.css';
+import { useNavigate } from 'react-router-dom';
 
-function Videojuegos({ videojuegos, onEliminar, onEditar }) {
+function Videojuegos({ videojuegos, onEliminar }) {
+
+  const navigate = useNavigate();
+  
+  function manejarEditar(vj){
+    navigate('/editar', {state: {juego: vj} });
+  }
+
   return (
     <div className="pantalla-centrada">
       <div className="panel-container">
@@ -71,17 +79,15 @@ function Videojuegos({ videojuegos, onEliminar, onEditar }) {
                 {/* Botones de Acción */}
                 <div className="action-buttons">
                   <button 
-                    onClick={() => onEditar(vj)}
+                    onClick={() => manejarEditar(vj)}
                     className="btn btn-edit"
-                    title="Editar juego"
-                  >
+                    title="Editar juego">
                     Editar
                   </button>
                   <button 
                     onClick={() => onEliminar(vj.id)}
                     className="btn btn-delete"
-                    title="Eliminar juego"
-                  >
+                    title="Eliminar juego">
                     Eliminar
                   </button>
                 </div>
@@ -90,7 +96,6 @@ function Videojuegos({ videojuegos, onEliminar, onEditar }) {
             );    
           })}
         </div>
-
       </div>
     </div>
   );

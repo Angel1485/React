@@ -1,16 +1,18 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
 import data from './data/empleados'
+import FormularioEmpleado from './pages/formularioEmpleados'
+import Navbar from './components/Navbar'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Empleados from './pages/empleados'
+import NoEncontrada from './pages/noEncontrada'
 
 function App() {
   
   const [empleados, setEmpleados] = useState(data)
 
   function agregarEmpleado(empleadoNuevo) {
-    
+    setEmpleados([...empleados, empleadoNuevo])
   }
 
   function eliminarEmpleado(id) {
@@ -26,11 +28,49 @@ function App() {
         return emp;
       }
     });
-
     setEmpleados(actualizados);
   }
 
-  return 
+  function manejarGuardar(empleado){
+    const existe = empleados.find((emp)=> emp.id === empleado.id );
+    if(existe){
+      editarEmpleado(empleado);
+    }else{
+      agregarEmpleado(empleado);
+    }
+  }
+
+  return (
+    <BrowserRouter>
+    <Navbar />
+      <Routes>
+       
+        <Route
+          path="/"
+          element={
+            <Empleados empleados={empleados} onEliminar={eliminarEmpleado} />
+          }
+        />
+
+        <Route
+          path="/nuevo"
+          element={<FormularioEmpleado onGuardar={manejarGuardar} />}
+        />
+
+        <Route
+          path="/editar"
+          element={<FormularioEmpleado onGuardar={manejarGuardar} />}
+        />
+
+        <Route
+          path="*"
+          element={<NoEncontrada />}
+        />
+
+      </Routes>
+
+    </BrowserRouter>
+  )
 }
 
 export default App

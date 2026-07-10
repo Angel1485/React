@@ -1,7 +1,15 @@
 import React from 'react';
-import './empleados.css';
+import { useNavigate } from 'react-router-dom';
+import './Empleados.css';
 
-function Empleados({ empleados, onEliminar, onEditar }) {
+function Empleados({ empleados, onEliminar }) {
+
+  const navigate = useNavigate();
+
+  function manejarEditar(emp){
+    navigate('/editar', {state: {empleado: emp} });
+  }
+
   return (
     <div className="pantalla-centrada">
       <div className="panel-container">
@@ -42,13 +50,13 @@ function Empleados({ empleados, onEliminar, onEditar }) {
                     <td className="col-nombre">{emp.nombre}</td>
                     
                     {/* Edad */}
-                    <td>{emp.edad} años</td>
+                    <td>{emp.edad}</td>
                     
                     {/* Departamento */}
-                    <td>{emp.departamento || emp.deepartamento || '—'}</td>
+                    <td>{emp.departamento }</td>
                     
                     {/* Turno */}
-                    <td>{emp.turno || emp.Turno || '—'}</td>
+                    <td>{emp.turno }</td>
                     
                     {/* Fecha Ingreso */}
                     <td className="col-ingreso">{emp.fechaIngreso}</td>
@@ -69,17 +77,15 @@ function Empleados({ empleados, onEliminar, onEditar }) {
                     <td className="text-right">
                       <div className="action-buttons">
                         <button 
-                          onClick={() => onEditar(emp)}
+                          onClick={() => manejarEditar(emp)}
                           className="btn btn-edit"
-                          title="Editar empleado"
-                        >
+                          title="Editar empleado">
                           Editar
                         </button>
                         <button 
                           onClick={() => onEliminar(emp.id)}
                           className="btn btn-delete"
-                          title="Eliminar empleado"
-                        >
+                          title="Eliminar empleado">
                           Eliminar
                         </button>
                       </div>

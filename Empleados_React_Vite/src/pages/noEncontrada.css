@@ -1,0 +1,67 @@
+/* Contenedor principal que ocupa toda la pantalla */
+.not-found-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f9fa; /* Un fondo gris muy claro y limpio */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Caja de contenido centralizada */
+.not-found-content {
+    text-align: center;
+    max-width: 500px;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Sombra suave */
+}
+
+/* El número gigante 404 */
+.not-found-error {
+    font-size: 6rem;
+    margin: 0;
+    color: #dc3545; /* Color rojo sutil de alerta */
+    font-weight: 800;
+    line-height: 1;
+}
+
+/* Título de la página */
+.not-found-title {
+    font-size: 1.8rem;
+    color: #212529;
+    margin: 15px 0 10px 0;
+}
+
+/* Texto descriptivo */
+.not-found-text {
+    color: #6c757d;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
+
+/* Botón estilizado para volver al inicio */
+.btn-home {
+    background-color: #0d6efd; /* Azul moderno */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+/* Efectos visuales para el botón */
+.btn-home:hover {
+    background-color: #0b5ed7;
+}
+
+.btn-home:active {
+    transform: scale(0.98);
+}
