@@ -161,3 +161,16 @@
   background-color: #1d4ed8;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
 }
+
+.error-mensaje {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+    color: #dc2626;
+    font-weight: 500;
+}
+
+.form-group input:invalid,
+.form-group textarea:invalid {
+    border-color: #dc2626;
+}

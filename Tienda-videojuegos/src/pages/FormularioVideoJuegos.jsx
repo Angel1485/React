@@ -9,7 +9,7 @@ function FormularioVideoJuego({onGuardar}){
 
     const videoJuegoRecuperado = location.state?.juego || null;
 
-    // Fecha máxima permitida: hoy (formato YYYY-MM-DD para el input date)
+    // Fecha máxima permitida: hoy
     const fechaHoy = new Date().toISOString().split("T")[0];
 
     const [titulo, setTitulo] = useState("");
@@ -23,6 +23,9 @@ function FormularioVideoJuego({onGuardar}){
     const [disponible, setDisponible] = useState(true);
     const [progreso, setProgreso] = useState("");
 
+    // Estado para guardar errores de validación
+    const [errores, setErrores] = useState({});
+
     useEffect(()=>{
       if(videoJuegoRecuperado){
         setTitulo(videoJuegoRecuperado.titulo);
@@ -34,8 +37,14 @@ function FormularioVideoJuego({onGuardar}){
         setCalificacionCritica(videoJuegoRecuperado.calificacionCritica ?? "");
         setPrecio(videoJuegoRecuperado.precio);
         setDisponible(videoJuegoRecuperado.disponible);
-        setProgreso(videoJuegoRecuperado.progreso);
+        setProgreso(videoJuegoRecuperado.progreso ?? "");
+        setErrores({}); // Limpiar errores al cargar
       }else{
+        reiniciarCampos();
+      }
+    }, [videoJuegoRecuperado]);
+
+    const reiniciarCampos = () => {
         setTitulo("");
         setGenero("");
         setPlataforma("");
@@ -46,53 +55,97 @@ function FormularioVideoJuego({onGuardar}){
         setPrecio("");
         setDisponible(true);
         setProgreso("");
-      }
-    }, [videoJuegoRecuperado]);
+        setErrores({});
+    };
 
-    function manejarGuardar(){
-        // Validación: la fecha de lanzamiento no puede ser futura
-        if (fechaLanzamiento && fechaLanzamiento > fechaHoy) {
-            alert("La fecha de lanzamiento no puede ser una fecha futura.");
-            return;
-        }
-
-        // Validación: sinopsis entre 10 y 250 caracteres
-        if (sinopsis.length < 10 || sinopsis.length > 250) {
-            alert("La sinopsis debe tener entre 10 y 250 caracteres.");
-            return;
-        }
-
-        // Validación: calificación de la crítica entre 1 y 100
+    // Función de validación completa
+    const validarFormulario = () => {
+        const nuevosErrores = {};
         const calificacionNum = Number(calificacionCritica);
-        if (calificacionCritica === "" || calificacionNum < 1 || calificacionNum > 100) {
-            alert("La calificación de la crítica debe estar entre 1 y 100.");
-            return;
+        const precioNum = Number(precio);
+        const lanzamientoNum = Number(lanzamiento);
+        const progresoNum = Number(progreso);
+
+        // Título
+        if (!titulo.trim()) {
+            nuevosErrores.titulo = "El nombre del videojuego no puede estar vacío";
         }
+
+        // GÉNERO (agregada validación)
+        if (!genero.trim()) {
+            nuevosErrores.genero = "El género no puede estar vacío";
+        }
+
+        // Calificación
+        if (!calificacionCritica || isNaN(calificacionNum) || calificacionNum < 1 || calificacionNum > 100) {
+            nuevosErrores.calificacionCritica = "La calificación debe ser un número entre 1 y 100";
+        }
+
+        // Sinopsis
+        if (!sinopsis.trim() || sinopsis.trim().length < 10) {
+            nuevosErrores.sinopsis = "La sinopsis debe tener entre 10 y 250 caracteres";
+        }
+        if (sinopsis.length > 250) {
+            nuevosErrores.sinopsis = "La sinopsis no puede superar los 250 caracteres";
+        }
+
+        // Precio
+        if (!precio || isNaN(precioNum) || precioNum <= 0) {
+            nuevosErrores.precio = "El precio debe ser mayor a 0";
+        }
+
+        // Año de lanzamiento
+        if (!lanzamiento || isNaN(lanzamientoNum) || lanzamientoNum < 1950 || lanzamientoNum > new Date().getFullYear()) {
+            nuevosErrores.lanzamiento = "Ingresa un año válido";
+        }
+
+        // Fecha de lanzamiento
+        if (fechaLanzamiento && fechaLanzamiento > fechaHoy) {
+            nuevosErrores.fechaLanzamiento = "La fecha no puede ser futura";
+        }
+
+        //  PROGRESO (corregida validación y mensaje)
+        if (progreso !== "") { // Solo validar si se escribió algo
+            if (isNaN(progresoNum) || progresoNum < 0 || progresoNum > 1) {
+                nuevosErrores.progreso = "El progreso debe ser un valor entre 0 y 1";
+            }
+        }
+
+        setErrores(nuevosErrores);
+        return Object.keys(nuevosErrores).length === 0;
+    };
+
+    // Manejador de guardado
+    function manejarGuardar(e){
+        e.preventDefault();
+
+        const formularioValido = validarFormulario();
+        if (!formularioValido) return;
 
         const videoJuego = {
-            id: videoJuegoRecuperado !== null && videoJuegoRecuperado !== undefined ? videoJuegoRecuperado.id : Date.now(),
-            titulo: titulo,
-            genero: genero,
+            id: videoJuegoRecuperado ? videoJuegoRecuperado.id : Date.now(),
+            titulo: titulo.trim(),
+            genero: genero.trim(),
             plataforma: plataforma,
             lanzamiento: Number(lanzamiento),
             fechaLanzamiento: fechaLanzamiento,
-            sinopsis: sinopsis,
-            calificacionCritica: calificacionNum,
+            sinopsis: sinopsis.trim(),
+            calificacionCritica: Number(calificacionCritica),
             precio: Number(precio),
             disponible: disponible,
-            progreso: Number(progreso)
+            progreso: progreso !== "" ? Number(progreso) : 0
         };
 
-         onGuardar(videoJuego)
-         navigate("/") 
+        onGuardar(videoJuego);
+        navigate("/");
     }
 
     function manejarCancelar(){
-         navigate("/") 
+         navigate("/");
     }
 
     return(
-        <div className="form-container">
+        <form className="form-container" onSubmit={manejarGuardar}>
             <h2 className="form-title">
               {videoJuegoRecuperado ? "Editar VideoJuego" : "Registrar Nuevo VideoJuego"}
             </h2>
@@ -105,23 +158,25 @@ function FormularioVideoJuego({onGuardar}){
                     onChange={(e) => setTitulo(e.target.value)} 
                     placeholder="Ej: Dios de la Guerra"
                 />
+                {errores.titulo && <span className="error-mensaje">{errores.titulo}</span>}
             </div>
 
             <div className="form-group">
-                <label>Genero</label>
+                <label>Género</label>
                 <input
                     type="text"
                     value={genero}
                     onChange={(e) => setGenero(e.target.value)}
-                    placeholder="Ej: Accion"
-                    min="18"
+                    placeholder="Ej: Acción, Aventura"
                 />
+                {/* Mensaje de error para género */}
+                {errores.genero && <span className="error-mensaje">{errores.genero}</span>}
             </div>
 
             <div className="form-group">
                 <label>Plataforma</label>
                 <select value={plataforma} onChange={(e) => setPlataforma(e.target.value)}>
-                    <option value="">Selecciona un departamento</option>
+                    <option value="">Selecciona una plataforma</option>
                     <option value="Nintendo Switch">Nintendo Switch</option>
                     <option value="PlayStation 5">PlayStation 5</option>
                     <option value="PlayStation 4">PlayStation 4</option>
@@ -134,12 +189,12 @@ function FormularioVideoJuego({onGuardar}){
             <div className="form-group">
                 <label>Año de Lanzamiento</label>
                 <input
-                    type="text"
+                    type="number"
                     value={lanzamiento}
                     onChange={(e) => setLanzamiento(e.target.value)}
-                    placeholder="Ej: 2020"
-                    min="18"
+                    placeholder="Ej: 2026"
                 />
+                {errores.lanzamiento && <span className="error-mensaje">{errores.lanzamiento}</span>}
             </div>
 
             <div className="form-group">
@@ -150,6 +205,7 @@ function FormularioVideoJuego({onGuardar}){
                     onChange={(e) => setFechaLanzamiento(e.target.value)}
                     max={fechaHoy}
                 />
+                {errores.fechaLanzamiento && <span className="error-mensaje">{errores.fechaLanzamiento}</span>}
             </div>
 
             <div className="form-group">
@@ -157,12 +213,11 @@ function FormularioVideoJuego({onGuardar}){
                 <textarea
                     value={sinopsis}
                     onChange={(e) => setSinopsis(e.target.value)}
-                    placeholder="Escribe una reseña corta del videojuego (10 a 250 caracteres)"
-                    minLength={10}
-                    maxLength={250}
+                    placeholder="Escribe una reseña corta del videojuego"
                     rows={4}
                 />
                 <small>{sinopsis.length}/250 caracteres</small>
+                {errores.sinopsis && <span className="error-mensaje">{errores.sinopsis}</span>}
             </div>
 
             <div className="form-group">
@@ -171,21 +226,21 @@ function FormularioVideoJuego({onGuardar}){
                     type="number"
                     value={calificacionCritica}
                     onChange={(e) => setCalificacionCritica(e.target.value)}
-                    placeholder="Ej: 85 (entre 1 y 100)"
-                    min="1"
-                    max="100"
+                    placeholder="Ej: 85"
                 />
+                {errores.calificacionCritica && <span className="error-mensaje">{errores.calificacionCritica}</span>}
             </div>
 
             <div className="form-group">
                 <label>Precio</label>
                 <input
                     type="number"
+                    step="0.01"
                     value={precio}
                     onChange={(e) => setPrecio(e.target.value)}
-                    placeholder="Ej: 18"
-                    min="18"
+                    placeholder="Ej: 19.99"
                 />
+                {errores.precio && <span className="error-mensaje">{errores.precio}</span>}
             </div>
 
             <div className="form-group">
@@ -206,17 +261,22 @@ function FormularioVideoJuego({onGuardar}){
                 <label>Progreso</label>
                 <input
                     type="number"
+                    step="0.01"
+                    min="0"
+                    max="1"
                     value={progreso}
                     onChange={(e) => setProgreso(e.target.value)} 
                     placeholder="Ej: 0.1 a 1"
                 />
+                {/* Mensaje de error para progreso */}
+                {errores.progreso && <span className="error-mensaje">{errores.progreso}</span>}
             </div>
 
             <div className="form-actions">
                 <button type="button" className="btn-cancel" onClick={manejarCancelar}>Cancelar</button>
-                <button type="button" className="btn-save" onClick={manejarGuardar}>Guardar</button>
+                <button type="submit" className="btn-save">Guardar</button>
             </div>
-        </div>
+        </form>
     ) 
 }
 
