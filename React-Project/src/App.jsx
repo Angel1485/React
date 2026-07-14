@@ -1,21 +1,21 @@
 import { useState } from 'react';
 import './App.css'; 
 
-function Pelicula({ titulo }) {
+function Pelicula({titulo , director = "Justin Hammer"}) {  /// Marca las peliculas
   const [esFavorita, setEsFavorita] = useState(false);
 
-  return (
-    <p 
-      onClick={() => setEsFavorita(!esFavorita)} 
-      className={`movie-item ${esFavorita ? 'is-favorite' : ''}`}
-    >
-      <span>{titulo}</span>
+  return (  
+    <div>
+      <button id='boton' onClick={() => setEsFavorita(!esFavorita)} className={`movie-item ${esFavorita ? 'is-favorite' : ''}`}> 
+
+      </button>
+      <span>{titulo} - {director} </span>
       {esFavorita && <span className="star-icon">⭐</span>}
-    </p>
+    </div>
   );
 }
 
-function App() {
+function App() { //Muestra el formulario
   const [peliculas, setPeliculas] = useState(["Vengadores DoomsDay", "Matrix", "Inception", "Coco", "Interstellar"]);
   const [nuevoTitulo, setNuevoTitulo] = useState("");
 
@@ -37,6 +37,7 @@ function App() {
           placeholder="Escribe una nueva película..."
           className="movie-input"
         />
+
         <button onClick={agregarPelicula} className="btn-add">Agregar</button>
       </div>
 
