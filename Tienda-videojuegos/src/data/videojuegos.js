@@ -5,6 +5,9 @@ const data = [
     "genero": "Aventura",
     "plataforma": "Nintendo Switch",
     "lanzamiento": 2023,
+    "fechaLanzamiento": "2023-05-12",
+    "sinopsis": "Link explora las islas flotantes de Hyrule para detener una amenaza que resurge desde el pasado.",
+    "calificacionCritica": 96,
     "precio": 59.99,
     "disponible": false,
     "progreso": 0.85
@@ -15,6 +18,9 @@ const data = [
     "genero": "Acción",
     "plataforma": "PlayStation 5",
     "lanzamiento": 2022,
+    "fechaLanzamiento": "2022-11-09",
+    "sinopsis": "Kratos y Atreus se preparan para enfrentar el Ragnarök en un viaje por los nueve reinos nórdicos.",
+    "calificacionCritica": 94,
     "precio": 69.99,
     "disponible": true,
     "progreso": 0.60
@@ -25,6 +31,9 @@ const data = [
     "genero": "RPG",
     "plataforma": "PC",
     "lanzamiento": 2022,
+    "fechaLanzamiento": "2022-02-25",
+    "sinopsis": "Un vagabundo sin destino explora las Tierras Intermedias para convertirse en el nuevo Señor de Elden.",
+    "calificacionCritica": 97,
     "precio": 49.99,
     "disponible": false,
     "progreso": 0.95
@@ -35,6 +44,9 @@ const data = [
     "genero": "Sandbox",
     "plataforma": "Multiplataforma",
     "lanzamiento": 2011,
+    "fechaLanzamiento": "2011-11-18",
+    "sinopsis": "Construye, explora y sobrevive en un mundo generado de bloques con infinitas posibilidades creativas.",
+    "calificacionCritica": 93,
     "precio": 29.99,
     "disponible": true,
     "progreso": 0.40
@@ -45,6 +57,9 @@ const data = [
     "genero": "RPG",
     "plataforma": "PC",
     "lanzamiento": 2020,
+    "fechaLanzamiento": "2020-12-10",
+    "sinopsis": "En Night City, un mercenario busca un implante único que otorga la clave de la inmortalidad.",
+    "calificacionCritica": 86,
     "precio": 39.99,
     "disponible": true,
     "progreso": 0.70
@@ -55,6 +70,9 @@ const data = [
     "genero": "Acción",
     "plataforma": "PlayStation 4",
     "lanzamiento": 2018,
+    "fechaLanzamiento": "2018-10-26",
+    "sinopsis": "Arthur Morgan vive los últimos días del salvaje oeste como parte de la banda Van der Linde.",
+    "calificacionCritica": 97,
     "precio": 24.99,
     "disponible": true,
     "progreso": 1.00
@@ -65,6 +83,9 @@ const data = [
     "genero": "Metroidvania",
     "plataforma": "PC",
     "lanzamiento": 2017,
+    "fechaLanzamiento": "2017-02-24",
+    "sinopsis": "Un pequeño caballero insecto explora el reino en ruinas de Hallownest lleno de secretos y peligros.",
+    "calificacionCritica": 90,
     "precio": 14.99,
     "disponible": true,
     "progreso": 0.55
@@ -75,6 +96,9 @@ const data = [
     "genero": "Deportes",
     "plataforma": "PlayStation 5",
     "lanzamiento": 2023,
+    "fechaLanzamiento": "2023-09-29",
+    "sinopsis": "La simulación de fútbol más popular llega con motor gráfico renovado y modo carrera mejorado.",
+    "calificacionCritica": 79,
     "precio": 69.99,
     "disponible": false,
     "progreso": 0.30
@@ -85,6 +109,9 @@ const data = [
     "genero": "Terror",
     "plataforma": "Xbox Series X",
     "lanzamiento": 2023,
+    "fechaLanzamiento": "2023-03-24",
+    "sinopsis": "Leon Kennedy viaja a un pueblo rural español para rescatar a la hija del presidente de una secta.",
+    "calificacionCritica": 93,
     "precio": 59.99,
     "disponible": true,
     "progreso": 0.80
@@ -95,6 +122,9 @@ const data = [
     "genero": "Acción",
     "plataforma": "PC",
     "lanzamiento": 2013,
+    "fechaLanzamiento": "2013-09-17",
+    "sinopsis": "Tres criminales distintos se entrelazan en una serie de golpes en la ciudad ficticia de Los Santos.",
+    "calificacionCritica": 96,
     "precio": 19.99,
     "disponible": true,
     "progreso": 0.90

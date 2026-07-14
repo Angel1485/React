@@ -7,7 +7,7 @@ function Videojuegos({ videojuegos, onEliminar }) {
   const navigate = useNavigate();
   
   function manejarEditar(vj){
-    navigate('/editar', {state: {juego: vj} });
+    navigate('/editar', { state: { juego: vj } });
   }
 
   return (
@@ -41,38 +41,59 @@ function Videojuegos({ videojuegos, onEliminar }) {
                   </span>
                 </div>
 
-                {/* Detalles del Juego */}
+                {/* Detalles del Juego — TODOS los campos del formulario */}
                 <div className="game-details">
                   <div className="game-info-row">
                     <span className="game-info-label">Género:</span>
-                    <span className="game-info-value">{vj.genero}</span>
+                    <span className="game-info-value">{vj.genero || "Sin especificar"}</span>
                   </div>
                   
                   <div className="game-info-row">
                     <span className="game-info-label">Plataforma:</span>
-                    <span className="game-info-value">{vj.plataforma}</span>
+                    <span className="game-info-value">{vj.plataforma || "Sin especificar"}</span>
                   </div>
 
                   <div className="game-info-row">
-                    <span className="game-info-label">Lanzamiento:</span>
-                    <span className="game-info-value">{vj.lanzamiento}</span>
+                    <span className="game-info-label">Año de lanzamiento:</span>
+                    <span className="game-info-value">{vj.lanzamiento || "Sin especificar"}</span>
+                  </div>
+
+                  <div className="game-info-row">
+                    <span className="game-info-label">Fecha de lanzamiento:</span>
+                    <span className="game-info-value">
+                      {vj.fechaLanzamiento 
+                        ? new Date(vj.fechaLanzamiento).toLocaleDateString() 
+                        : "Sin especificar"}
+                    </span>
+                  </div>
+
+                  <div className="game-info-row">
+                    <span className="game-info-label">Calificación crítica:</span>
+                    <span className="game-info-value">{vj.calificacionCritica ? `${vj.calificacionCritica}/100` : "Sin calificación"}</span>
                   </div>
 
                   <div className="game-info-row">
                     <span className="game-info-label">Precio:</span>
-                    <span className="game-info-value">{vj.precio}</span>
+                    <span className="game-info-value">${vj.precio || "0.00"}</span>
+                  </div>
+
+                  <div className="game-info-row">
+                    <span className="game-info-label">Sinopsis:</span>
+                    <p className="game-info-value sinopsis-text">
+                      {vj.sinopsis || "Sin descripción disponible"}
+                    </p>
                   </div>
                 </div>
 
                 {/* Sección de progreso de juego */}
                 <div className="progress-container">
                   <progress 
-                    value={vj.progreso} 
+                    value={vj.progreso || 0} 
                     max="1" 
                     style={{ width: '100%', height: '8px', accentColor: '#1d4ed8' }}
                   />
                   <span style={{ fontSize: '12px', color: '#64748b', display: 'block', marginTop: '4px' }}>
-                    Progreso: {Math.round(vj.progreso * 100)}%
+                    Progreso: {Math.round((vj.progreso || 0) * 100)}%
                   </span>
                 </div>
 

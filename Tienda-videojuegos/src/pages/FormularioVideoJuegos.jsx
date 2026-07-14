@@ -9,10 +9,16 @@ function FormularioVideoJuego({onGuardar}){
 
     const videoJuegoRecuperado = location.state?.juego || null;
 
+    // Fecha máxima permitida: hoy (formato YYYY-MM-DD para el input date)
+    const fechaHoy = new Date().toISOString().split("T")[0];
+
     const [titulo, setTitulo] = useState("");
     const [genero, setGenero] = useState("");
     const [plataforma, setPlataforma] = useState("");
     const [lanzamiento, setLanzamiento] = useState("");
+    const [fechaLanzamiento, setFechaLanzamiento] = useState("");
+    const [sinopsis, setSinopsis] = useState("");
+    const [calificacionCritica, setCalificacionCritica] = useState("");
     const [precio, setPrecio] = useState(""); 
     const [disponible, setDisponible] = useState(true);
     const [progreso, setProgreso] = useState("");
@@ -23,6 +29,9 @@ function FormularioVideoJuego({onGuardar}){
         setGenero(videoJuegoRecuperado.genero);
         setPlataforma(videoJuegoRecuperado.plataforma);
         setLanzamiento(videoJuegoRecuperado.lanzamiento);
+        setFechaLanzamiento(videoJuegoRecuperado.fechaLanzamiento || "");
+        setSinopsis(videoJuegoRecuperado.sinopsis || "");
+        setCalificacionCritica(videoJuegoRecuperado.calificacionCritica ?? "");
         setPrecio(videoJuegoRecuperado.precio);
         setDisponible(videoJuegoRecuperado.disponible);
         setProgreso(videoJuegoRecuperado.progreso);
@@ -31,19 +40,44 @@ function FormularioVideoJuego({onGuardar}){
         setGenero("");
         setPlataforma("");
         setLanzamiento("");
+        setFechaLanzamiento("");
+        setSinopsis("");
+        setCalificacionCritica("");
         setPrecio("");
         setDisponible(true);
         setProgreso("");
       }
     }, [videoJuegoRecuperado]);
-    
+
     function manejarGuardar(){
+        // Validación: la fecha de lanzamiento no puede ser futura
+        if (fechaLanzamiento && fechaLanzamiento > fechaHoy) {
+            alert("La fecha de lanzamiento no puede ser una fecha futura.");
+            return;
+        }
+
+        // Validación: sinopsis entre 10 y 250 caracteres
+        if (sinopsis.length < 10 || sinopsis.length > 250) {
+            alert("La sinopsis debe tener entre 10 y 250 caracteres.");
+            return;
+        }
+
+        // Validación: calificación de la crítica entre 1 y 100
+        const calificacionNum = Number(calificacionCritica);
+        if (calificacionCritica === "" || calificacionNum < 1 || calificacionNum > 100) {
+            alert("La calificación de la crítica debe estar entre 1 y 100.");
+            return;
+        }
+
         const videoJuego = {
             id: videoJuegoRecuperado !== null && videoJuegoRecuperado !== undefined ? videoJuegoRecuperado.id : Date.now(),
             titulo: titulo,
             genero: genero,
             plataforma: plataforma,
             lanzamiento: Number(lanzamiento),
+            fechaLanzamiento: fechaLanzamiento,
+            sinopsis: sinopsis,
+            calificacionCritica: calificacionNum,
             precio: Number(precio),
             disponible: disponible,
             progreso: Number(progreso)
@@ -58,7 +92,6 @@ function FormularioVideoJuego({onGuardar}){
     }
 
     return(
-        /* 1. AGREGAMOS CONTENEDOR PRINCIPAL Y TITULO DINÁMICO */
         <div className="form-container">
             <h2 className="form-title">
               {videoJuegoRecuperado ? "Editar VideoJuego" : "Registrar Nuevo VideoJuego"}
@@ -99,13 +132,48 @@ function FormularioVideoJuego({onGuardar}){
             </div>
 
             <div className="form-group">
-                <label>Genero</label>
+                <label>Año de Lanzamiento</label>
                 <input
                     type="text"
                     value={lanzamiento}
                     onChange={(e) => setLanzamiento(e.target.value)}
                     placeholder="Ej: 2020"
                     min="18"
+                />
+            </div>
+
+            <div className="form-group">
+                <label>Fecha de Lanzamiento</label>
+                <input
+                    type="date"
+                    value={fechaLanzamiento}
+                    onChange={(e) => setFechaLanzamiento(e.target.value)}
+                    max={fechaHoy}
+                />
+            </div>
+
+            <div className="form-group">
+                <label>Sinopsis / Descripción</label>
+                <textarea
+                    value={sinopsis}
+                    onChange={(e) => setSinopsis(e.target.value)}
+                    placeholder="Escribe una reseña corta del videojuego (10 a 250 caracteres)"
+                    minLength={10}
+                    maxLength={250}
+                    rows={4}
+                />
+                <small>{sinopsis.length}/250 caracteres</small>
+            </div>
+
+            <div className="form-group">
+                <label>Calificación de la Crítica</label>
+                <input
+                    type="number"
+                    value={calificacionCritica}
+                    onChange={(e) => setCalificacionCritica(e.target.value)}
+                    placeholder="Ej: 85 (entre 1 y 100)"
+                    min="1"
+                    max="100"
                 />
             </div>
 
@@ -144,7 +212,6 @@ function FormularioVideoJuego({onGuardar}){
                 />
             </div>
 
-            {/* 2. ENVOLVEMOS LOS BOTONES Y METEMOS CLASES */}
             <div className="form-actions">
                 <button type="button" className="btn-cancel" onClick={manejarCancelar}>Cancelar</button>
                 <button type="button" className="btn-save" onClick={manejarGuardar}>Guardar</button>
