@@ -5,29 +5,44 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TablaVideojuegos from './pages/TablaVideojuegos'
 import FormularioVideoJuego from './pages/FormularioVideoJuegos';
 import NoEncontrada from './pages/noEncontrada'
+import AlertaNotificacion from './pages/AlertaNotificacion'; // Importar
 
 function App() {
 
-  //const [videojuegos, setVideoJuegos] = useState(data)
-
-  // Lectura inicial: usa localStorage si hay datos, si no usa el archivo data
   const [videojuegos, setVideoJuegos] = useState(() => {
     const guardados = localStorage.getItem("lista_videojuegos");
     return guardados ? JSON.parse(guardados) : data;
   });
 
-  // Guarda automáticamente en localStorage cada vez que cambie la lista
+  // Estados para controlar la alerta
+  const [alerta, setAlerta] = useState({
+    visible: false,
+    mensaje: ""
+  });
+
   useEffect(() => {
     localStorage.setItem("lista_videojuegos", JSON.stringify(videojuegos));
   }, [videojuegos]);
 
+  // Función para mostrar la alerta fácilmente
+  function mostrarAlerta(mensaje) {
+    setAlerta({ visible: true, mensaje });
+  }
+
+  // Función para cerrar la alerta
+  function cerrarAlerta() {
+    setAlerta({ visible: false, mensaje: "" });
+  }
+
   function agregarVideojuego(juegoNuevo) {
     setVideoJuegos([...videojuegos, juegoNuevo])
+    mostrarAlerta("✅ Videojuego agregado correctamente");
   }
 
   function eliminarVideojuego(id) {
     const filtrados = videojuegos.filter((vj) => vj.id !== id);
     setVideoJuegos(filtrados);
+    mostrarAlerta("🗑️ Videojuego eliminado correctamente");
   }
 
   function editarVideojuego(videojuegoEditado) {
@@ -39,6 +54,7 @@ function App() {
       }
     });
     setVideoJuegos(actualizados);
+    mostrarAlerta("✏️ Videojuego actualizado correctamente");
   }
 
   function manejarGuardar(videoJuego){
@@ -52,35 +68,36 @@ function App() {
 
   return (
     <BrowserRouter>
-    <Navbar />
+      {/* Componente de alerta */}
+      <AlertaNotificacion 
+        mensaje={alerta.mensaje} 
+        mostrar={alerta.visible} 
+        onCierre={cerrarAlerta}
+      />
+
+      <Navbar />
       <Routes>
-       
         <Route
           path="/"
           element={
             <TablaVideojuegos videojuegos={videojuegos} onEliminar={eliminarVideojuego} />
           }
         />
-
-          <Route
+        <Route
           path="/nuevo"
           element={<FormularioVideoJuego onGuardar={manejarGuardar} />}
         />
-
         <Route
           path="/editar"
           element={<FormularioVideoJuego onGuardar={manejarGuardar} />}
         /> 
-
         <Route
           path="*"
           element={<NoEncontrada />}
         />
-
       </Routes>
     </BrowserRouter>
   )
-  
 }
 
 export default App
