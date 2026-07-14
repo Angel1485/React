@@ -6,8 +6,8 @@ import FixedRerender from './caso2-too-many-rerenders/FixedRerender.jsx';
 import './App.css'
 
 function App() {
-  const [case1Mode, setCase1Mode] = useState('fixed'); // 'fixed' o 'buggy'
-  const [case2Mode, setCase2Mode] = useState('fixed'); // 'fixed' o 'buggy'
+  const [case1Mode, setCase1Mode] = useState('fixed'); // 'fixed' o 'buggy' puede ser cualquier estado
+  const [case2Mode, setCase2Mode] = useState('fixed'); // 'fixed' o 'buggy' puede ser cualquier estado
 
   return (
     
