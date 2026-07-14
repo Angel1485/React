@@ -11,7 +11,7 @@ function AlertaNotificacion({ mensaje, mostrar, onCierre }) {
       const temporizador = setTimeout(() => {
         setVisible(false);
         onCierre?.(); // Notificar al padre que se cerró
-      }, 3000);
+      }, 6000);
 
       // Limpiar temporizador si el componente se desmonta
       return () => clearTimeout(temporizador);

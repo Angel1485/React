@@ -11,9 +11,17 @@
   font-weight: 500;
   z-index: 9999;
   max-width: 320px;
-  /* Animación de entrada y salida */
-  animation: aparecer 0.3s ease-out, desaparecer 0.3s ease-in 2.7s forwards;
+  pointer-events: none; /* 🔹 No reacciona al ratón, así no se interrumpe */
   opacity: 0;
+
+  /* 
+  Explicación de tiempos:
+  - aparecer: 0.3s → entra suave
+  - desaparecer: dura 1s, empieza después de 5s → total 6s
+  */
+  animation: 
+    aparecer 0.3s ease-out forwards,
+    desaparecer 1s ease-in 5s forwards;
 }
 
 @keyframes aparecer {
