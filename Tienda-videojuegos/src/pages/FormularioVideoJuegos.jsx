@@ -226,7 +226,7 @@ function FormularioVideoJuego({onGuardar}){
                     type="number"
                     value={calificacionCritica}
                     onChange={(e) => setCalificacionCritica(e.target.value)}
-                    placeholder="Ej: 85"
+                    placeholder="Ej: 1 a 100"
                 />
                 {errores.calificacionCritica && <span className="error-mensaje">{errores.calificacionCritica}</span>}
             </div>

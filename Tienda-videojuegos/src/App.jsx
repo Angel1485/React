@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import data from './data/videojuegos'
 import Navbar from './components/Navbar'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -8,7 +8,18 @@ import NoEncontrada from './pages/noEncontrada'
 
 function App() {
 
-  const [videojuegos, setVideoJuegos] = useState(data)
+  //const [videojuegos, setVideoJuegos] = useState(data)
+
+  // Lectura inicial: usa localStorage si hay datos, si no usa el archivo data
+  const [videojuegos, setVideoJuegos] = useState(() => {
+    const guardados = localStorage.getItem("lista_videojuegos");
+    return guardados ? JSON.parse(guardados) : data;
+  });
+
+  // Guarda automáticamente en localStorage cada vez que cambie la lista
+  useEffect(() => {
+    localStorage.setItem("lista_videojuegos", JSON.stringify(videojuegos));
+  }, [videojuegos]);
 
   function agregarVideojuego(juegoNuevo) {
     setVideoJuegos([...videojuegos, juegoNuevo])
