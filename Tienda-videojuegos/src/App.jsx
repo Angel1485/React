@@ -11,18 +11,28 @@ function App() {
 
   const [videojuegos, setVideoJuegos] = useState(() => {
     const guardados = localStorage.getItem("lista_videojuegos");
-    return guardados ? JSON.parse(guardados) : data;
+    // Si existe y NO está vacío → lo usamos
+    if (guardados) {
+      const datosGuardados = JSON.parse(guardados);
+      if (datosGuardados.length > 0) {
+        return datosGuardados;
+      }
+    }
+    // Si no existe o está vacío → cargamos siempre data
+    return data;
   });
 
-  // Estados para controlar la alerta
+  // Este efecto se queda igual
+  useEffect(() => {
+    localStorage.setItem("lista_videojuegos", JSON.stringify(videojuegos));
+  }, [videojuegos]);
+
+
+   // Estados para controlar la alerta
   const [alerta, setAlerta] = useState({
     visible: false,
     mensaje: ""
   });
-
-  useEffect(() => {
-    localStorage.setItem("lista_videojuegos", JSON.stringify(videojuegos));
-  }, [videojuegos]);
 
   // Función para mostrar la alerta fácilmente
   function mostrarAlerta(mensaje) {
