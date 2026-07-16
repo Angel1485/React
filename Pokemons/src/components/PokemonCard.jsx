@@ -1,4 +1,3 @@
-// src/components/PokemonCard.jsx
 import React from 'react';
 
 const PokemonCard = ({ pokemon }) => {

@@ -1,7 +1,5 @@
-// src/services/pokemonApi.js
-
 // Obtener lista básica de Pokémon
-export const getPokemonList = async (limit = 20) => {
+export const getPokemonList = async (limit = 50) => {  //Aqui cambia el numero de los pokemons
   try {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
     if (!response.ok) throw new Error("Error al obtener la lista");

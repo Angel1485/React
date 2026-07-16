@@ -1,4 +1,3 @@
-// src/components/PokemonList.jsx
 import React from 'react';
 import PokemonCard from './PokemonCard';
 
