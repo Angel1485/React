@@ -1,0 +1,31 @@
+/* Estilos para las pantallas de Login y Registro */
+body {
+  background-color: #8a8ab9; /* Fondo oscuro global */
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+form {
+  background-color: #16213e;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 350px; /* Ancho máximo para que no se estire en PC */
+  margin: 50px auto; /* Centrado en la pantalla */
+  box-sizing: border-box;
+}
+
+form h2 {
+  text-align: center;
+  color: #00d2ff;
+  margin-bottom: 20px;
+}
+
+/* Hacemos que los inputs sean 100% de ancho en móviles */
+@media (max-width: 400px) {
+  form {
+    padding: 20px;
+    margin: 20px auto;
+  }
+}
